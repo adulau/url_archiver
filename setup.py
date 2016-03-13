@@ -9,5 +9,5 @@ setup(
     description="url-archiver is a simple library to fetch and archive URL on the file-system.",
     license="AGPL",
     keywords="internet url caching webcache cache",
-    url="http://github.com/adulau/url-archiver"
+    url="http://github.com/adulau/url_archiver"
 )
