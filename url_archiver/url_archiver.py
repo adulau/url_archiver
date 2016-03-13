@@ -50,7 +50,8 @@ class Archive:
             return False
         v = os.path.join(self.archive_path, v)
         v = os.path.join(v, "archive")
-        print (v)
+        if self.debug:
+            print ("Archive path {}".format(v))
         if os.path.exists(v):
             return True
         else:
@@ -61,7 +62,6 @@ class Archive:
             return False
         v = os.path.join(self.archive_path, v)
         v = os.path.join(v, "archive")
-        print (v)
         if os.path.exists(v):
             f = open(v, 'r')
             archive = f.read()
