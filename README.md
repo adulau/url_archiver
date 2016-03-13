@@ -5,7 +5,7 @@ url_archiver is a simple library to fetch and archive URL on the file-system.
 # How to install it?
 
 ~~~
-pip install url_archiver
+pip install urlarchiver
 ~~~
 
 or from the source
