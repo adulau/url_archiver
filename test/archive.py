@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from url_archiver import url_archiver
 
@@ -13,3 +13,4 @@ for url in urlstoarchive:
 # return the content of the cache (if already fetched) or return the live
 # content
 print (archiver.fetch(url='http://www.foo.be/'))
+print (archiver.fetch(url='http://www.foo.be/', armor=True))
