@@ -6,11 +6,12 @@ import url_normalize
 import os
 import hashlib
 import json
+import base64
 
 __author__ = "Alexandre Dulaunoy"
 __copyright__ = "Copyright 2016, Alexandre Dulaunoy"
 __license__ = "AGPL version 3"
-__version__ = "0.1"
+__version__ = "0.2"
 
 class Archive:
 
@@ -57,16 +58,19 @@ class Archive:
         else:
             return False
 
-    def _get(self, v=False):
+    def _get(self, v=False, armor=False):
         if not v:
             return False
         v = os.path.join(self.archive_path, v)
         v = os.path.join(v, "archive")
         if os.path.exists(v):
-            f = open(v, 'r')
+            f = open(v, 'rb')
             archive = f.read()
             f.close()
-            return archive
+            if not armor:
+                return archive
+            else:
+                return base64.b64encode(archive)
         else:
             return False
 
@@ -91,7 +95,7 @@ class Archive:
                 print ("{} already archived".format(u))
             return False
 
-    def fetch(self, url=False):
+    def fetch(self, url=False, armor=False):
         if not url:
             return False
         normalizedurl = url_normalize.url_normalize(url)
@@ -109,10 +113,11 @@ class Archive:
                 meta['url_archiver:urlhash'] = urlhash
                 meta['url_archiver:version'] = __version__
                 self._store(raw=fetcher.text, u=normalizedurl, meta=meta)
-                return fetcher.text
+                return self._get(v=urlhash, armor=armor)
         else:
-                return self._get(v=urlhash)
+                return self._get(v=urlhash, armor=armor)
 
 if __name__ == "__main__":
     a = Archive(archive_path='/tmp', debug=True)
-    raw = a.fetch(url='http://www.foo.be:80///')
+    raw = a.fetch(url='http://www.foo.be:80///', armor=True)
+    print (base64.b64decode(raw))
